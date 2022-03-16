@@ -1,4 +1,4 @@
-schema: ./src/*.graphql
+schema: ./src/**/*.graphql
 generates:
   ./src/schema-types.ts:
     config:
