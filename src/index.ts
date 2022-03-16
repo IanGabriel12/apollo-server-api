@@ -1,4 +1,7 @@
-import { ApolloServer, gql } from "apollo-server";
+import { ApolloServer } from "apollo-server";
+import { loadSchemaSync } from "@graphql-tools/load";
+import { GraphQLFileLoader } from "@graphql-tools/graphql-file-loader";
+import { Resolvers } from "./schema-types";
 
 const roles = [
   {
@@ -23,20 +26,11 @@ const roles = [
   },
 ];
 
-const typeDefs = gql`
-  type Role {
-    id: String!
-    name: String!
-    slug: String!
-  }
+const typeDefs = loadSchemaSync("./schema.graphql", {
+  loaders: [new GraphQLFileLoader()],
+});
 
-  type Query {
-    roles: [Role!]!
-    role(id: String!): Role
-  }
-`;
-
-const resolvers = {
+const resolvers: Resolvers = {
   Query: {
     roles: () => roles,
     role: (parent: any, args: { id: string }) => {
