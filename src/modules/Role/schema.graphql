@@ -1,5 +1,5 @@
 type Role {
-  id: String!
+  id: ID!
   name: String!
   slug: String!
 }
@@ -7,4 +7,10 @@ type Role {
 type Query {
   roles: [Role!]!
   role(id: String!): Role
+}
+
+type Mutation {
+  insertRole(name: String!): Role!
+  updateRole(id: ID!, name: String!): Role!
+  deleteRole(id: ID!): Boolean
 }
