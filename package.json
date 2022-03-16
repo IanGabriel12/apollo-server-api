@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@graphql-tools/load-files": "^6.5.3",
+    "apollo-datasource": "^3.3.1",
     "apollo-server": "^3.6.4",
     "graphql": "^16.3.0",
     "graphql-tools": "^8.2.1",

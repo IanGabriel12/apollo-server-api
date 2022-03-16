@@ -2,46 +2,33 @@ import { ApolloServer } from "apollo-server";
 import { loadSchemaSync } from "@graphql-tools/load";
 import { GraphQLFileLoader } from "@graphql-tools/graphql-file-loader";
 import { Resolvers } from "./schema-types";
+import RoleDataSource from "./datasources/RoleDatasource";
+import { ContextType } from "./types";
+import path from "path";
 
-const roles = [
-  {
-    id: "123",
-    name: "Administrador",
-    slug: "administrador",
-  },
-  {
-    id: "124",
-    name: "Regional",
-    slug: "regional",
-  },
-  {
-    id: "125",
-    name: "Comercial",
-    slug: "comercial",
-  },
-  {
-    id: "126",
-    name: "Trabalhador",
-    slug: "trabalhador",
-  },
-];
-
-const typeDefs = loadSchemaSync("./schema.graphql", {
+const typeDefs = loadSchemaSync(path.join(__dirname, "schema.graphql"), {
   loaders: [new GraphQLFileLoader()],
 });
 
-const resolvers: Resolvers = {
+const resolvers: Resolvers<ContextType> = {
   Query: {
-    roles: () => roles,
-    role: (parent: any, args: { id: string }) => {
-      return roles.find((role) => role.id === args.id) || null;
+    roles: (parent, args, context, info) => {
+      return context.dataSources.roles.listRoles();
+    },
+    role: (parent, args, context) => {
+      return context.dataSources.roles.getRole(args.id) || null;
     },
   },
 };
 
+const dataSources = () => ({
+  roles: new RoleDataSource(),
+});
+
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  dataSources,
 });
 
 server.listen().then((response) => {
