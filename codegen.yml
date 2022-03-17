@@ -3,6 +3,10 @@ generates:
   ./src/schema-types.ts:
     config:
       useIndexSignature: true
+      mappers:
+        Role: ./models/Role#RoleModel
     plugins:
       - typescript
       - typescript-resolvers
+    mappers:
+      Role: ./src/models/Role#Role

@@ -1,4 +1,5 @@
 import { GraphQLResolveInfo } from 'graphql';
+import { RoleModel } from './models/Role';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -129,7 +130,7 @@ export type ResolversTypes = ResolversObject<{
   ID: ResolverTypeWrapper<Scalars['ID']>;
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
-  Role: ResolverTypeWrapper<Role>;
+  Role: ResolverTypeWrapper<RoleModel>;
   String: ResolverTypeWrapper<Scalars['String']>;
 }>;
 
@@ -139,7 +140,7 @@ export type ResolversParentTypes = ResolversObject<{
   ID: Scalars['ID'];
   Mutation: {};
   Query: {};
-  Role: Role;
+  Role: RoleModel;
   String: Scalars['String'];
 }>;
 

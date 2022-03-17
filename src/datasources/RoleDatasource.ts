@@ -1,29 +1,18 @@
 import { DataSource } from "apollo-datasource";
+import IRoleDataSource from "../interfaces/IRoleDataSource";
+import { RoleModel, RoleProps } from "../models/Role";
 
-const roles = [
-  {
-    id: "123",
-    name: "Administrador",
-    slug: "administrador",
-  },
-  {
-    id: "124",
-    name: "Regional",
-    slug: "regional",
-  },
-  {
-    id: "125",
-    name: "Comercial",
-    slug: "comercial",
-  },
-  {
-    id: "126",
-    name: "Trabalhador",
-    slug: "trabalhador",
-  },
+const roles: RoleModel[] = [
+  RoleModel.createRole({ name: "Administrador" }),
+  RoleModel.createRole({ name: "Trabalhador" }),
+  RoleModel.createRole({ name: "Regional" }),
+  RoleModel.createRole({ name: "Comercial" }),
 ];
 
-export default class RoleDataSource extends DataSource {
+export default class RoleDataSource
+  extends DataSource
+  implements IRoleDataSource
+{
   constructor() {
     super();
   }
@@ -33,17 +22,23 @@ export default class RoleDataSource extends DataSource {
   }
 
   getRole(id: string) {
-    return roles.find((role) => role.id === id);
+    return roles.find((role) => role.id === id) || null;
   }
 
-  insertRole(data: { id: string; name: string; slug: string }) {
-    roles.push(data);
-    return data;
+  insertRole(data: RoleProps) {
+    const newRole = RoleModel.createRole(data);
+    roles.push(newRole);
+    return newRole;
   }
 
-  updateRole(id: string, data: { name: string; slug: string }) {
+  updateRole(id: string, data: RoleProps) {
+    const updatedRole = RoleModel.createRole({
+      id,
+      name: data.name,
+    });
+
     const index = roles.findIndex((role) => role.id === id);
-    Object.assign(roles[index], data);
+    roles[index] = updatedRole;
     return roles[index];
   }
 
