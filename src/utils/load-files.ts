@@ -1,10 +1,9 @@
-import path from "path";
 import { loadSchema } from "@graphql-tools/load";
 import { GraphQLFileLoader } from "@graphql-tools/graphql-file-loader";
 import { mergeResolvers } from "@graphql-tools/merge";
 import { loadFiles } from "@graphql-tools/load-files";
-import RoleDataSource from "../datasources/RoleDatasource";
 import { DataSourcesType } from "../types";
+import KnexRoleDataSource from "../datasources/KnexRoleDataSource";
 
 function loadTypeDefs() {
   return loadSchema("./src/modules/**/*.graphql", {
@@ -26,7 +25,7 @@ function loadResolvers() {
 
 function loadDataSources(): () => DataSourcesType {
   return () => ({
-    roles: new RoleDataSource(),
+    roles: new KnexRoleDataSource(),
   });
 }
 

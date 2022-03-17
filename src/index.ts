@@ -3,6 +3,7 @@ import loadEverything from "./utils/load-files";
 
 loadEverything().then(([typeDefs, resolvers, dataSources]) => {
   const server = new ApolloServer({
+    introspection: true,
     typeDefs,
     resolvers,
     dataSources,

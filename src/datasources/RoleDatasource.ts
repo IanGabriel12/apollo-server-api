@@ -17,21 +17,21 @@ export default class RoleDataSource
     super();
   }
 
-  listRoles() {
+  async listRoles() {
     return roles;
   }
 
-  getRole(id: string) {
+  async getRole(id: string) {
     return roles.find((role) => role.id === id) || null;
   }
 
-  insertRole(data: RoleProps) {
+  async insertRole(data: RoleProps) {
     const newRole = RoleModel.createRole(data);
     roles.push(newRole);
     return newRole;
   }
 
-  updateRole(id: string, data: RoleProps) {
+  async updateRole(id: string, data: RoleProps) {
     const updatedRole = RoleModel.createRole({
       id,
       name: data.name,
@@ -42,7 +42,7 @@ export default class RoleDataSource
     return roles[index];
   }
 
-  deleteRole(id: string) {
+  async deleteRole(id: string) {
     const index = roles.findIndex((role) => role.id === id);
     roles.splice(index, 1);
     return true;
