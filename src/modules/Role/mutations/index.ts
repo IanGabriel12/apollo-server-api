@@ -7,7 +7,7 @@ const resolvers: Resolvers<ContextType> = {
       return context.dataSources.roles.insertRole(args);
     },
     updateRole: (parent, args, context) => {
-      const updatedRole = context.dataSources.roles.updateRole(args.id, args);
+      const updatedRole = context.dataSources.roles.updateRole(args, args.id);
       return updatedRole;
     },
     deleteRole: (parent, args, context) => {

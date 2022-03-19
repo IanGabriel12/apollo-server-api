@@ -1,9 +1,9 @@
-import RoleDataSource from "./datasources/RoleDatasource";
+import IRoleDataSource from "./interfaces/IRoleDataSource";
 
 export type ContextType = {
   dataSources: DataSourcesType;
 };
 
 export type DataSourcesType = {
-  roles: RoleDataSource;
+  roles: IRoleDataSource;
 };

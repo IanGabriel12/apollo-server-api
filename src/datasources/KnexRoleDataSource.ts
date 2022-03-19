@@ -27,11 +27,8 @@ export default class KnexRoleDataSource
     return role;
   }
 
-  async updateRole(id: string, data: RoleProps) {
-    const updatedRole = RoleModel.createRole({
-      id,
-      ...data,
-    });
+  async updateRole(data: RoleProps, id: string) {
+    const updatedRole = RoleModel.createRole(data, id);
 
     await this.knex("roles").update(updatedRole).where("id", "=", id);
     return updatedRole;
