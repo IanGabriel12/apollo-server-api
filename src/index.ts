@@ -1,5 +1,8 @@
 import { ApolloServer } from "apollo-server";
 import loadEverything from "./utils/load-files";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 loadEverything().then(([typeDefs, resolvers, dataSources]) => {
   const server = new ApolloServer({

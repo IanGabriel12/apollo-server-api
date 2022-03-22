@@ -5,6 +5,7 @@ generates:
       useIndexSignature: true
       mappers:
         Role: ./models/Role#RoleModel
+        User: ./models/User#UserModel
     plugins:
       - typescript
       - typescript-resolvers

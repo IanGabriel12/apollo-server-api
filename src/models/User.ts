@@ -1,4 +1,3 @@
-import { Role } from "../schema-types";
 import crypto from "crypto";
 
 export type UserProps = {
@@ -6,16 +5,16 @@ export type UserProps = {
   password: string;
   name: string;
   email: string;
-  role: Role;
+  role_id: string;
 };
 
-export class User {
+export class UserModel {
   id: string;
   username: string;
   password: string;
   name: string;
   email: string;
-  role: Role;
+  role_id: string;
 
   constructor(props: UserProps, id?: string) {
     this.id = id || crypto.randomUUID();
@@ -23,11 +22,11 @@ export class User {
     this.password = props.password;
     this.name = props.name;
     this.email = props.email;
-    this.role = props.role;
+    this.role_id = props.role_id;
   }
 
   static createUser(props: UserProps, id?: string) {
-    const user = new User(props, id);
+    const user = new UserModel(props, id);
     return user;
   }
 }

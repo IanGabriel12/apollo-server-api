@@ -4,6 +4,7 @@ import { mergeResolvers } from "@graphql-tools/merge";
 import { loadFiles } from "@graphql-tools/load-files";
 import { DataSourcesType } from "../types";
 import KnexRoleDataSource from "../datasources/KnexRoleDataSource";
+import KnexUserDataSource from "../datasources/KnexUserDataSource";
 
 function loadTypeDefs() {
   return loadSchema("./src/modules/**/*.graphql", {
@@ -16,9 +17,11 @@ function loadResolvers() {
 
   const loadQueryFiles = loadFiles("./src/modules/**/queries/index.ts");
 
-  return Promise.all([loadMutationFiles, loadQueryFiles]).then(
-    ([mutationFiles, queryFiles]) => {
-      return mergeResolvers([...mutationFiles, ...queryFiles]);
+  const loadTypeFiles = loadFiles("./src/modules/**/types/index.ts");
+
+  return Promise.all([loadMutationFiles, loadQueryFiles, loadTypeFiles]).then(
+    ([mutationFiles, queryFiles, typeFiles]) => {
+      return mergeResolvers([...mutationFiles, ...queryFiles, ...typeFiles]);
     }
   );
 }
@@ -26,6 +29,7 @@ function loadResolvers() {
 function loadDataSources(): () => DataSourcesType {
   return () => ({
     roles: new KnexRoleDataSource(),
+    users: new KnexUserDataSource(),
   });
 }
 

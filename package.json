@@ -8,15 +8,19 @@
     "@graphql-codegen/cli": "^2.6.2",
     "@graphql-codegen/typescript": "^2.4.7",
     "@graphql-codegen/typescript-resolvers": "^2.5.4",
+    "@types/bcrypt": "^5.0.0",
     "nodemon": "^2.0.15"
   },
   "dependencies": {
     "@graphql-tools/load-files": "^6.5.3",
     "apollo-datasource": "^3.3.1",
     "apollo-server": "^3.6.4",
+    "bcrypt": "^5.0.1",
     "datasource-sql": "^2.0.0",
+    "dotenv": "^16.0.0",
     "graphql": "^16.3.0",
     "graphql-tools": "^8.2.1",
+    "jsonwebtoken": "^8.5.1",
     "knex": "^1.0.4",
     "mysql": "^2.18.1",
     "mysql2": "^2.3.3",
@@ -26,6 +30,8 @@
   },
   "scripts": {
     "dev": "NODE_ENV=development && nodemon src/index.ts -e ts,json,graphql",
-    "generate": "graphql-codegen"
+    "generate": "graphql-codegen",
+    "migrate:make": "knex migrate:make -x ts",
+    "migrate:latest": "knex migrate:latest"
   }
 }
