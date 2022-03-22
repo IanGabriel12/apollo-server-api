@@ -50,6 +50,7 @@ export type Query = {
   login: Scalars['String'];
   role?: Maybe<Role>;
   roles: Array<Role>;
+  user: User;
 };
 
 
@@ -61,6 +62,11 @@ export type QueryLoginArgs = {
 
 export type QueryRoleArgs = {
   id: Scalars['String'];
+};
+
+
+export type QueryUserArgs = {
+  id?: InputMaybe<Scalars['ID']>;
 };
 
 export type Role = {
@@ -191,6 +197,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   login?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<QueryLoginArgs, 'password' | 'username'>>;
   role?: Resolver<Maybe<ResolversTypes['Role']>, ParentType, ContextType, RequireFields<QueryRoleArgs, 'id'>>;
   roles?: Resolver<Array<ResolversTypes['Role']>, ParentType, ContextType>;
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType, Partial<QueryUserArgs>>;
 }>;
 
 export type RoleResolvers<ContextType = any, ParentType extends ResolversParentTypes['Role'] = ResolversParentTypes['Role']> = ResolversObject<{

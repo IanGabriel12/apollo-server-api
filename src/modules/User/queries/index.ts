@@ -1,8 +1,9 @@
-import { UserInputError } from "apollo-server";
+import { AuthenticationError, UserInputError } from "apollo-server";
 import { Resolvers } from "../../../schema-types";
 import { ContextType } from "../../../types";
 import bcrypt from "bcrypt";
 import { generateToken } from "../../../utils/token";
+import { UserModel } from "../../../models/User";
 
 const resolvers: Resolvers<ContextType> = {
   Query: {
@@ -25,6 +26,21 @@ const resolvers: Resolvers<ContextType> = {
       const token = generateToken({ id: user.id, role_id: user.role_id });
 
       return token;
+    },
+
+    async user(parent, args, ctx, info) {
+      if (!ctx.user_id)
+        throw new AuthenticationError("You need to be logged in");
+
+      if (ctx.hasAdminPermissions && args.id) {
+        const user = await ctx.dataSources.users.getUser(args.id);
+        if (!user) throw new UserInputError("User does not exists");
+        return user;
+      }
+
+      const user = (await ctx.dataSources.users.getUser(ctx.user_id))!;
+
+      return user;
     },
   },
 };

@@ -3,6 +3,10 @@ import IUserDataSource from "./interfaces/IUserDataSource";
 
 export type ContextType = {
   dataSources: DataSourcesType;
+  user_id: string | null;
+  hasAdminPermissions: boolean;
+  hasRegionalPermissions: boolean;
+  hasComercialPermissions: boolean;
 };
 
 export type DataSourcesType = {

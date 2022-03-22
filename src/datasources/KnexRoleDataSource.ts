@@ -2,13 +2,19 @@ import IRoleDataSource from "../interfaces/IRoleDataSource";
 import { RoleModel, RoleProps } from "../models/Role";
 import KnexDataSource from "../utils/KnexDataSource";
 
+export type RoleDBReturn = {
+  id: string;
+  name: string;
+};
 export default class KnexRoleDataSource
   extends KnexDataSource
   implements IRoleDataSource
 {
   async listRoles() {
     const roleData = await this.knex("roles").select("*");
-    const roles = roleData.map((props) => RoleModel.createRole(props));
+    const roles = roleData.map((props) =>
+      RoleModel.createRole(props, props.id)
+    );
     return roles;
   }
 
@@ -17,7 +23,7 @@ export default class KnexRoleDataSource
       .select("*")
       .where("id", "=", id)
       .first();
-    const role = RoleModel.createRole(roleData);
+    const role = RoleModel.createRole(roleData, roleData.id);
     return role;
   }
 
