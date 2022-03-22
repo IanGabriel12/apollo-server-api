@@ -4,6 +4,7 @@ import { ContextType } from "../../../types";
 import jwt from "jsonwebtoken";
 import { UserInputError } from "apollo-server";
 import bcrypt from "bcrypt";
+import { generateToken } from "../../../utils/token";
 
 const SALT_ROUNDS = 10;
 
@@ -25,11 +26,7 @@ const resolver: Resolvers<ContextType> = {
 
       const user = await ctx.dataSources.users.insertUser(data);
 
-      const token = jwt.sign(
-        { id: user.id, role_id: user.role_id },
-        process.env.PRIVATE_KEY!,
-        { expiresIn: "1 day" }
-      );
+      const token = generateToken({ id: user.id, role_id: user.role_id });
 
       return token;
     },
