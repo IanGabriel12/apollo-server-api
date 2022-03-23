@@ -42,7 +42,7 @@ loadEverything().then(([typeDefs, resolvers, dataSources]) => {
     },
   });
 
-  server.listen().then((response) => {
+  server.listen({ port: process.env.PORT || 4000 }).then((response) => {
     console.log("Server ready at " + response.url);
   });
 });
