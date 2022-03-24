@@ -13,11 +13,13 @@ function loadTypeDefs() {
 }
 
 function loadResolvers() {
-  const loadMutationFiles = loadFiles("./src/modules/**/mutations/index");
+  const loadMutationFiles = loadFiles(
+    "./src/modules/**/mutations/index.{ts,js}"
+  );
 
-  const loadQueryFiles = loadFiles("./src/modules/**/queries/index");
+  const loadQueryFiles = loadFiles("./src/modules/**/queries/index.{ts,js}");
 
-  const loadTypeFiles = loadFiles("./src/modules/**/types/index");
+  const loadTypeFiles = loadFiles("./src/modules/**/types/index.{ts,js}");
 
   return Promise.all([loadMutationFiles, loadQueryFiles, loadTypeFiles]).then(
     ([mutationFiles, queryFiles, typeFiles]) => {
