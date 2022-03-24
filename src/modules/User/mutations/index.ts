@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 import { UserInputError } from "apollo-server";
 import bcrypt from "bcrypt";
 import { generateToken } from "../../../utils/token";
+import { NORMAL_ROLE } from "../../../constants/roles";
 
 const SALT_ROUNDS = 10;
 
@@ -20,6 +21,8 @@ const resolver: Resolvers<ContextType> = {
       if (usernameAlreadyExists) {
         throw new UserInputError("Username already exists");
       }
+
+      if (!ctx.hasAdminPermissions || !data.role_id) data.role_id = NORMAL_ROLE;
 
       const cryptedPassword = bcrypt.hashSync(data.password, SALT_ROUNDS);
       data.password = cryptedPassword;

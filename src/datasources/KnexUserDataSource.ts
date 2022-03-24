@@ -41,15 +41,16 @@ export default class KnexUserDataSource
   }
 
   async insertUser(data: UserProps): Promise<UserModel> {
-    console.log(data);
     const user = UserModel.createUser(data);
     await this.knex("users").insert(user);
     return user;
   }
+
   async updateUser(data: UserProps, id: string): Promise<UserModel> {
     await this.knex("users").update(data).where("id", "=", id);
     return UserModel.createUser(data, id);
   }
+
   async deleteUser(id: string): Promise<boolean> {
     await this.knex("users").del().where("id", "=", id);
     return true;
