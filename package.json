@@ -38,7 +38,7 @@
     "copyschemas": "copyfiles ./src/**/*.graphql ./build",
     "dev": "NODE_ENV=development && nodemon src/index.ts -e ts,json,graphql",
     "generate": "graphql-codegen",
-    "migrate:make": "knex migrate:make -x ts",
+    "migrate:make": "knex migrate:make",
     "migrate:latest": "knex migrate:latest"
   }
 }
