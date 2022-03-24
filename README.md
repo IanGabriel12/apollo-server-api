@@ -7,20 +7,42 @@
 
 This project is a GraphQL API made with Apollo-Server library. The goal is to learn GraphQL with Apollo-Server code structure and how it works so I can use this knowledge to write better code and maintain a current project at work that uses these technologies.
 
-## Development Flow
+## Running locally
 
-### Define models and Data Source interfaces
+### Create database
 
-This is library-independent code. The model properties are defined in `models` directory, and the `interfaces` directory contains data source methods.
+This project users mysql8. You can change connection data according to your settings in `knexfile.ts`
 
-### Define model GraphQL schema
+```js
+connection: {
+  database: "graphql",
+  user: "root",
+  password: "toor",
+},
+```
 
-The schema is located at `src/modules/<model>/schema.graphql`
+### Define envoronment variables
 
-### Generate types for Typescript
+Define a value for these specific environment variables (others are optional)
 
-This project uses graphql-codegen, the code is generated with the script `yarn generate`
+```
+PRIVATE_KEY
+ADMIN_USERNAME
+ADMIN_PASSWORD
+```
 
-### Implement queries and migrations
+### Install dependecies
 
-Here we implement all the logic and business rules. Each migration and query should be in a seperate file in `src/modules/<model>/mutations` and `src/modules/<model>/queries`
+Run `yarn install`
+
+### Setup database
+
+Run migrations and seeds
+
+```bash
+yarn migrate:latest && yarn knex seed:run
+```
+
+### Run `yarn dev`
+
+Your server is ready!
